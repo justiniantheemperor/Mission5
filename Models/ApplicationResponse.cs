@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Mission5.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mission4.Models
+namespace Mission5.Models
 {
     public class ApplicationResponse
     {
         [Key]
         [Required]
-        public int id { get; set; }
-        [Required]
-        public string Category { get; set; }
+        public int Id { get; set; }
 
         [Required] 
         public string Title { get; set; }
@@ -34,5 +33,13 @@ namespace Mission4.Models
 
         [MaxLength(25)]
         public string Notes { get; set; }
+
+
+        // Build Foreign Key Relationship 
+
+        [Required]
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
     }
 }

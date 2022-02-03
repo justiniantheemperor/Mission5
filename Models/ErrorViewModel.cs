@@ -1,6 +1,6 @@
 using System;
 
-namespace Mission4.Models
+namespace Mission5.Models
 {
     public class ErrorViewModel
     {

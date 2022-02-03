@@ -1,26 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Mission4.Models;
-using System;
-using System.Collections.Generic;
+using Mission5.Models;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Mission4.Controllers
+namespace Mission5.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
         //
-        private MovieApplicationContext _blahContext { get; set; }
+        private MovieApplicationContext movieContext { get; set; }
 
         //Constructor
         public HomeController(ILogger<HomeController> logger, MovieApplicationContext someName)
         {
             _logger = logger;
-            _blahContext = someName;
+            movieContext = someName;
         }
 
         public IActionResult Index()
@@ -36,14 +34,29 @@ namespace Mission4.Controllers
         [HttpGet]
         public IActionResult Movies()
         {
+            ViewBag.Categories = movieContext.Categories.ToList();
+
             return View();
         }
         [HttpPost]
         public IActionResult Movies(ApplicationResponse response)
         {
-            _blahContext.Add(response);
-            _blahContext.SaveChanges();
+            ViewBag.Categories = movieContext.Categories.ToList();
+
+            movieContext.Add(response);
+            movieContext.SaveChanges();
+
             return View();
+        }
+
+        public IActionResult Waitlist()
+        {
+            var applications = movieContext.Responses
+                .Include(x => x.Category)
+                .OrderBy(x => x.Title)
+                .ToList();
+
+            return View(applications);
         }
 
         public IActionResult Privacy()
