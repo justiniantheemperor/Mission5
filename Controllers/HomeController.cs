@@ -36,7 +36,7 @@ namespace Mission5.Controllers
         {
             ViewBag.Categories = movieContext.Categories.ToList();
 
-            return View();
+            return View(new ApplicationResponse());
         }
         [HttpPost]
         public IActionResult Movies(ApplicationResponse response)
