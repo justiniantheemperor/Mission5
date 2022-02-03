@@ -33,6 +33,9 @@
                 <td>@x.Edited</td>
                 <td>@x.LentTo</td>
                 <td>@x.Notes</td>
+               
+                <td><a asp-controller="Home" asp-action="Edit" asp-route-applicationid="@x.Id">Edit</a></td>
+                <td><a asp-controller="Home" asp-action="Delete" asp-route-applicationid="@x.Id">Delete</a></td>
             </tr>
             }
         </tbody>

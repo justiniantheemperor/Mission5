@@ -9,6 +9,10 @@
 
 <div>
     <form method="post">
+
+        @*Prints error message*@
+        <div asp-validation-summary="All"></div>
+
         <label asp-for="CategoryId">Category:</label>
         <select asp-for="CategoryId">
             <option value="">Select a Major</option>

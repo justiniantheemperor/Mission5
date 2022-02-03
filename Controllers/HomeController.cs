@@ -43,12 +43,22 @@ namespace Mission5.Controllers
         {
             ViewBag.Categories = movieContext.Categories.ToList();
 
-            movieContext.Add(response);
-            movieContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                movieContext.Add(response);
+                movieContext.SaveChanges();
+            }
+            else //If Invalid
+            {
+                return View(response);
+            }
 
-            return View();
+ 
+
+            return RedirectToAction("Waitlist");
         }
 
+        // display all the values
         public IActionResult Waitlist()
         {
             var applications = movieContext.Responses
@@ -58,6 +68,50 @@ namespace Mission5.Controllers
 
             return View(applications);
         }
+
+        //edit function
+        [HttpGet]
+        public IActionResult Edit(int applicationid)
+        {
+            ViewBag.Categories = movieContext.Categories.ToList();
+
+            var application = movieContext.Responses.Single(x => x.Id == applicationid);
+
+            return View("Movies", application);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ApplicationResponse change)
+        {
+
+            movieContext.Update(change);
+            movieContext.SaveChanges();
+
+            return RedirectToAction("Waitlist");
+        }
+
+        //delete function
+
+        [HttpGet]
+        public IActionResult Delete(int applicationid)
+        {
+            var application = movieContext.Responses.Single(x => x.Id == applicationid);
+
+            return View(application);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(ApplicationResponse response)
+        {
+            movieContext.Responses.Remove(response);
+            movieContext.SaveChanges();
+
+            return RedirectToAction("Waitlist");
+        }
+
+
+
+        // irrelevant to project, ignore
 
         public IActionResult Privacy()
         {
